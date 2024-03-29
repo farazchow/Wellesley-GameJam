@@ -11,5 +11,14 @@ config_version=5
 [application]
 
 config/name="Wellesley Game Jam"
+run/main_scene="res://Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
 config/icon="res://icon.svg"
+
+[display]
+
+window/size/mode=2
+
+[rendering]
+
+textures/canvas_textures/default_texture_filter=0

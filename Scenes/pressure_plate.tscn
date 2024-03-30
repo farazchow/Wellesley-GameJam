@@ -1,0 +1,79 @@
+[gd_scene load_steps=8 format=3 uid="uid://cca4f7go2jqqd"]
+
+[ext_resource type="Script" path="res://Scripts/pressure_plate.gd" id="1_nr82x"]
+[ext_resource type="Texture2D" uid="uid://dwpsyr8u7joor" path="res://Assets/pressure_plate-Sheet.png" id="1_wyxby"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nrsoi"]
+size = Vector2(29.5, 20)
+
+[sub_resource type="Animation" id="Animation_ib6h8"]
+resource_name = "plate_up"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PressurePlate-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_wbo0w"]
+resource_name = "plate_down"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PressurePlate-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="Animation" id="Animation_5qnml"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PressurePlate-sheet:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [1]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_aukgy"]
+_data = {
+"RESET": SubResource("Animation_5qnml"),
+"plate_down": SubResource("Animation_wbo0w"),
+"plate_up": SubResource("Animation_ib6h8")
+}
+
+[node name="PressurePlate" type="Area2D"]
+script = ExtResource("1_nr82x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_nrsoi")
+
+[node name="PressurePlate-sheet" type="Sprite2D" parent="."]
+texture = ExtResource("1_wyxby")
+hframes = 2
+frame = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_aukgy")
+}
+autoplay = "plate_up"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

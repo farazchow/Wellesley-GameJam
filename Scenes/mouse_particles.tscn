@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://dgs6vaunkdvu6"]
+
+[ext_resource type="Material" uid="uid://blcbqvjof4lop" path="res://Assets/mouse_particles.tres" id="1_cbydq"]
+
+[node name="GPUParticles2D" type="GPUParticles2D"]
+position = Vector2(124, 3)
+amount = 20
+process_material = ExtResource("1_cbydq")
+lifetime = 0.5
+randomness = 0.5

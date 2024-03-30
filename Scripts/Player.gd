@@ -1,15 +1,21 @@
 extends CharacterBody2D
 
-
+# variables
 @export var SPEED = 200.0
 @export var JUMP_VELOCITY = -100.0
 @export var gravity = 200.0
 
+# instantiating assets
 @onready var raycast_line = Line2D.new()
+var mouse_particles = preload("res://Scenes/mouse_particles.tscn")
+var mouse_particles_instance
 
 func _ready():
 	raycast_line.set_width(1.0)
 	add_child(raycast_line)
+	
+	mouse_particles_instance = mouse_particles.instantiate()
+	add_child(mouse_particles_instance)
 
 func _physics_process(delta):
 	velocity.y += gravity * delta
@@ -22,7 +28,7 @@ func _physics_process(delta):
 		$HollowKnight.flip_h = true
 	if local_mouse_pos.x > 0:
 		$HollowKnight.flip_h = false
-	$MouseParticles.position = local_mouse_pos
+	mouse_particles_instance.position = local_mouse_pos
 	
 	# clear raycast_lines	
 	if horizontal_input != 0:
@@ -38,11 +44,15 @@ func _input(event):
 		var local_mouse_pos = get_local_mouse_position()
 		var global_mouse_pos = get_global_mouse_position()
 		var space_state = get_world_2d().direct_space_state
-		var query = PhysicsRayQueryParameters2D.create(position, position + local_mouse_pos)
+		var query = PhysicsRayQueryParameters2D.create(global_position, global_mouse_pos)
+		query.exclude = [self]
 		var result = space_state.intersect_ray(query)
-		print(global_mouse_pos, position, local_mouse_pos)
-		
+		if not result.is_empty() and result["collider"].get_class() == "RigidBody2D":
+			print("hit")
+			result["collider"].apply_impulse(Vector2(10, 0), global_position)
 		raycast_line.clear_points()
 		raycast_line.add_point(Vector2(0, 0))
-		raycast_line.add_point(local_mouse_pos)
-		
+		if not result.is_empty():
+			raycast_line.add_point(raycast_line.to_local(result["position"]))
+		else: 
+			raycast_line.add_point(local_mouse_pos)

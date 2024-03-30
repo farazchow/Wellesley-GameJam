@@ -17,3 +17,5 @@ shape = SubResource("RectangleShape2D_syjob")
 
 [node name="HollowKnight" type="Sprite2D" parent="."]
 texture = ExtResource("1_2vqfl")
+
+[node name="Camera2D" type="Camera2D" parent="."]

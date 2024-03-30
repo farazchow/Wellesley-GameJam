@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://doh4gy4qgpy2f"]
+
+[ext_resource type="Texture2D" uid="uid://sh6dy08ypglt" path="res://Assets/SoccerBall.png" id="1_sgesd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_f4neb"]
+
+[node name="RigidBody2D" type="RigidBody2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+scale = Vector2(3, 3)
+shape = SubResource("CircleShape2D_f4neb")
+
+[node name="SoccerBall" type="Sprite2D" parent="."]
+scale = Vector2(0.6, 0.6)
+texture = ExtResource("1_sgesd")

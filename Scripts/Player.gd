@@ -4,6 +4,7 @@ extends CharacterBody2D
 @export var SPEED = 200.0
 @export var JUMP_VELOCITY = -100.0
 @export var gravity = 200.0
+@export var air_force = -300.0
 
 # instantiating assets
 @onready var raycast_line = Line2D.new()
@@ -48,8 +49,7 @@ func _input(event):
 		query.exclude = [self]
 		var result = space_state.intersect_ray(query)
 		if not result.is_empty() and result["collider"].get_class() == "RigidBody2D":
-			print("hit")
-			result["collider"].apply_impulse(Vector2(10, 0), global_position)
+			result["collider"].apply_impulse(result["normal"] * air_force, Vector2(0,0))
 		raycast_line.clear_points()
 		raycast_line.add_point(Vector2(0, 0))
 		if not result.is_empty():

@@ -1,19 +1,23 @@
-[gd_scene load_steps=4 format=3 uid="uid://bi8cdbvdpdegh"]
+[gd_scene load_steps=5 format=3 uid="uid://bi8cdbvdpdegh"]
 
 [ext_resource type="Texture2D" uid="uid://derr7sjmpg6tc" path="res://Assets/HollowKnight.png" id="1_2vqfl"]
 [ext_resource type="Script" path="res://Scripts/Player.gd" id="1_n03cp"]
+[ext_resource type="PackedScene" uid="uid://dgs6vaunkdvu6" path="res://Scenes/mouse_particles.tscn" id="3_fsant"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syjob"]
 size = Vector2(10, 24)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
+position = Vector2(259, 29)
 script = ExtResource("1_n03cp")
+JUMP_VELOCITY = -150.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 3)
-scale = Vector2(10, 10)
 shape = SubResource("RectangleShape2D_syjob")
 
 [node name="HollowKnight" type="Sprite2D" parent="."]
-scale = Vector2(10, 10)
 texture = ExtResource("1_2vqfl")
+
+[node name="MouseParticles" parent="." instance=ExtResource("3_fsant")]
+position = Vector2(-403, -155)

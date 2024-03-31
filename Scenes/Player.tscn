@@ -6,8 +6,10 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_syjob"]
 size = Vector2(10, 24)
 
-[node name="CharacterBody2D" type="CharacterBody2D"]
+[node name="CharacterBody2D" type="CharacterBody2D" groups=["Player"]]
 position = Vector2(259, 29)
+collision_layer = 3
+collision_mask = 7
 script = ExtResource("1_n03cp")
 JUMP_VELOCITY = -150.0
 

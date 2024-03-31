@@ -3,6 +3,7 @@
 [ext_resource type="Material" uid="uid://blcbqvjof4lop" path="res://Assets/mouse_particles.tres" id="1_cbydq"]
 
 [node name="GPUParticles2D" type="GPUParticles2D"]
+z_index = 1
 position = Vector2(124, 3)
 amount = 20
 process_material = ExtResource("1_cbydq")

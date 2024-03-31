@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://dwpsyr8u7joor" path="res://Assets/pressure_plate-Sheet.png" id="1_wyxby"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nrsoi"]
-size = Vector2(29.5, 20)
+size = Vector2(29.5, 5)
 
 [sub_resource type="Animation" id="Animation_ib6h8"]
 resource_name = "plate_up"
@@ -62,6 +62,7 @@ _data = {
 script = ExtResource("1_nr82x")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 7.5)
 shape = SubResource("RectangleShape2D_nrsoi")
 
 [node name="PressurePlate-sheet" type="Sprite2D" parent="."]

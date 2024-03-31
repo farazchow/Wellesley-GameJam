@@ -1,0 +1,43 @@
+[gd_scene load_steps=6 format=3 uid="uid://dpbbquihnebtd"]
+
+[ext_resource type="Texture2D" uid="uid://bn3qdv6uye1bd" path="res://Assets/water_tile.png" id="1_d2eds"]
+[ext_resource type="Script" path="res://Scripts/water.gd" id="1_gpexy"]
+[ext_resource type="Texture2D" uid="uid://cdvdl140nh0by" path="res://Assets/ice_tile.png" id="3_2hvpy"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xnxoj"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4suud"]
+size = Vector2(32, 31.25)
+
+[node name="Water" type="Area2D" groups=["Water"]]
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("1_gpexy")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(-1, 1)
+texture = ExtResource("1_d2eds")
+
+[node name="Timer" type="Timer" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+z_index = 1
+position = Vector2(-1, 1)
+shape = SubResource("RectangleShape2D_xnxoj")
+
+[node name="IceBody" type="StaticBody2D" parent="."]
+visible = false
+position = Vector2(-1, -10)
+scale = Vector2(1, 0.32)
+collision_layer = 0
+collision_mask = 0
+
+[node name="IceCollision" type="CollisionShape2D" parent="IceBody"]
+shape = SubResource("RectangleShape2D_4suud")
+
+[node name="IceTile" type="Sprite2D" parent="IceBody"]
+texture = ExtResource("3_2hvpy")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

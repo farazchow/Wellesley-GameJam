@@ -1,5 +1,8 @@
 extends CharacterBody2D
 
+#signals
+signal dead
+
 # variables
 @export var SPEED = 200.0
 @export var JUMP_VELOCITY = -100.0
@@ -21,6 +24,7 @@ func _ready():
 	add_child(raycast_line)
 	
 	mouse_particles_instance = mouse_particles.instantiate()
+	mouse_particles_instance.process_material.color = Color(particle_colors[0])
 	add_child(mouse_particles_instance)
 
 func _physics_process(delta):
@@ -57,13 +61,18 @@ func _input(event):
 		var space_state = get_world_2d().direct_space_state
 		var query = PhysicsRayQueryParameters2D.create(global_position, global_mouse_pos)
 		query.exclude = [self]
+		query.collide_with_areas = true
 		var result = space_state.intersect_ray(query)
 		
 		# Air
 		if element == 0:
 			if not result.is_empty() and result["collider"].get_class() == "RigidBody2D":
 				result["collider"].apply_central_impulse(result["normal"] * air_force)
-				
+		# Water
+		if element == 1:
+			if not result.is_empty() and result["collider"].is_in_group("Water"):
+				result["collider"].freeze()
+		
 		raycast_line.clear_points()
 		raycast_line.add_point(Vector2(0, 0))
 		if not result.is_empty():
@@ -75,3 +84,7 @@ func _input(event):
 	if event.is_action_pressed("ui_right_mouse"):
 		element = (element+1) % 4
 		mouse_particles_instance.process_material.color = Color(particle_colors[element])
+
+func die():
+	dead.emit()
+	queue_free()

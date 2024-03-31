@@ -17,8 +17,9 @@ JUMP_VELOCITY = -150.0
 position = Vector2(0, 3)
 shape = SubResource("RectangleShape2D_syjob")
 
-[node name="HollowKnight" type="Sprite2D" parent="."]
+[node name="Sprite" type="Sprite2D" parent="."]
 texture = ExtResource("1_2vqfl")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(1.5, 1.5)
+position_smoothing_speed = 2.0
